@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Рибний світ — рибний магазин у Кам'янському</title>
+  <meta name="description" content="Рибний світ — свіжа риба, ікра, морепродукти та закуски до пива в Кам'янському. пр. Василя Стуса, 37/16. Тел. 096 515 5605.">
+  <meta name="theme-color" content="#06264a">
+  <style>
+    :root {
+      --navy-900: #04182f;
+      --navy-800: #06264a;
+      --navy-700: #0a3a6b;
+      --aqua-500: #14b8c4;
+      --aqua-400: #3fd0d8;
+      --aqua-100: #e3f8fa;
+      --gold-500: #c9a24d;
+      --gold-300: #e6cc8a;
+      --white: #ffffff;
+      --bg: #f6fafc;
+      --text: #12283f;
+      --muted: #5b7088;
+      --viber: #7360f2;
+      --tg: #229ed9;
+      --radius: 20px;
+      --shadow: 0 10px 30px rgba(6, 38, 74, .10);
+      --shadow-lg: 0 22px 50px rgba(6, 38, 74, .22);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    .container { width: min(1180px, 92%); margin-inline: auto; }
+    section { padding: 96px 0; }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: .8rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--gold-500);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      line-height: 1.2;
+      color: var(--navy-800);
+      margin-bottom: 14px;
+    }
+    .section-lead { color: var(--muted); max-width: 620px; font-size: 1.05rem; }
+    .section-head { margin-bottom: 52px; }
+    .section-head.center { text-align: center; }
+    .section-head.center .section-lead { margin-inline: auto; }
+
+    /* ---------- Кнопки ---------- */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      font-weight: 600; font-size: 1rem;
+      border: 2px solid transparent;
+      cursor: pointer;
+      position: relative; overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
+    }
+    .btn:active { transform: scale(.96); }
+    .btn svg { width: 20px; height: 20px; flex: none; }
+    .btn::after {
+      content: "";
+      position: absolute; top: 0; left: -80%;
+      width: 50%; height: 100%;
+      background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .55), transparent);
+      transform: skewX(-20deg);
+      animation: sheen 4.5s ease-in-out infinite;
+    }
+    @keyframes sheen { 0%, 55% { left: -80%; } 100% { left: 160%; } }
+
+    .btn-gold {
+      background: linear-gradient(120deg, var(--gold-300), var(--gold-500), var(--gold-300));
+      background-size: 250% 100%;
+      color: var(--navy-900);
+      box-shadow: 0 8px 22px rgba(201, 162, 77, .35);
+      animation: flow 6s linear infinite;
+    }
+    .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(201, 162, 77, .55); }
+
+    .btn-viber {
+      background: linear-gradient(120deg, #5a47e0, #8f7fff, #5a47e0);
+      background-size: 250% 100%;
+      color: #fff;
+      box-shadow: 0 8px 22px rgba(115, 96, 242, .45);
+      animation: flow 6s linear infinite;
+    }
+    .btn-viber:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 14px 32px rgba(115, 96, 242, .65); }
+
+    .btn-tg {
+      background: linear-gradient(120deg, #1b86bd, #4fc3f7, #1b86bd);
+      background-size: 250% 100%;
+      color: #fff;
+      box-shadow: 0 8px 22px rgba(34, 158, 217, .45);
+      animation: flow 6s linear infinite;
+    }
+    .btn-tg:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 14px 32px rgba(34, 158, 217, .65); }
+
+    .btn-outline {
+      border-color: rgba(255, 255, 255, .55);
+      color: #fff;
+      background: rgba(255, 255, 255, .06);
+      backdrop-filter: blur(6px);
+    }
+    .btn-outline:hover { background: #fff; color: var(--navy-800); transform: translateY(-3px); }
+    @keyframes flow { to { background-position: 250% 0; } }
+
+    .btn-lg { padding: 18px 34px; font-size: 1.1rem; }
+
+    /* ---------- Шапка ---------- */
+    header {
+      position: fixed; inset: 0 0 auto 0; z-index: 100;
+      padding: 18px 0;
+      transition: background .3s ease, box-shadow .3s ease, padding .3s ease;
+    }
+    header.scrolled {
+      background: rgba(4, 24, 47, .92);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, .25);
+      padding: 10px 0;
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .logo { display: flex; align-items: center; gap: 12px; color: #fff; }
+    .logo-mark {
+      width: 44px; height: 44px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--aqua-400), var(--navy-700));
+      display: grid; place-items: center;
+      box-shadow: 0 0 0 2px rgba(230, 204, 138, .6);
+    }
+    .logo-mark svg { width: 26px; height: 26px; }
+    .logo-text { font-size: 1.3rem; font-weight: 700; letter-spacing: .02em; line-height: 1; }
+    .logo-text small {
+      display: block; font-size: .6rem; font-weight: 500;
+      letter-spacing: .25em; text-transform: uppercase;
+      color: var(--gold-300); margin-top: 4px;
+    }
+    .nav-links { display: flex; gap: 30px; }
+    .nav-links a {
+      color: rgba(255, 255, 255, .88); font-weight: 500; font-size: .97rem;
+      position: relative; padding: 4px 0; transition: color .25s;
+    }
+    .nav-links a::after {
+      content: ""; position: absolute; left: 0; bottom: -2px;
+      width: 0; height: 2px; background: var(--gold-300);
+      transition: width .3s ease;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .nav-actions .btn { padding: 10px 18px; font-size: .92rem; }
+    .burger {
+      display: none; width: 44px; height: 44px; border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, .35);
+      background: rgba(255, 255, 255, .08);
+      cursor: pointer; position: relative; z-index: 101;
+    }
+    .burger span, .burger span::before, .burger span::after {
+      content: ""; position: absolute; left: 50%; top: 50%;
+      width: 20px; height: 2px; background: #fff; border-radius: 2px;
+      transform: translate(-50%, -50%);
+      transition: transform .3s ease, background .3s ease;
+    }
+    .burger span::before { transform: translate(-50%, -7px); }
+    .burger span::after { transform: translate(-50%, 5px); }
+    .burger.open span { background: transparent; }
+    .burger.open span::before { transform: translate(-50%, -50%) rotate(45deg); }
+    .burger.open span::after { transform: translate(-50%, -50%) rotate(-45deg); }
+
+    /* ---------- Прогрес скролу ---------- */
+    .progress {
+      position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 110;
+      background: linear-gradient(90deg, var(--aqua-400), var(--gold-300));
+    }
+
+    /* ---------- Головний екран ---------- */
+    .hero {
+      position: relative;
+      min-height: 100vh; min-height: 100svh;
+      display: flex; align-items: center;
+      padding: 130px 0 120px;
+      color: #fff; overflow: hidden;
+      background:
+        radial-gradient(900px 500px at 85% 15%, rgba(63, 208, 216, .28), transparent 60%),
+        radial-gradient(700px 500px at 0% 100%, rgba(20, 184, 196, .22), transparent 60%),
+        linear-gradient(160deg, var(--navy-900) 0%, var(--navy-800) 55%, var(--navy-700) 100%);
+    }
+    .bubbles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .bubbles i {
+      position: absolute; bottom: -40px; border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, .28);
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, .25), rgba(255, 255, 255, 0) 70%);
+      animation: rise linear infinite;
+    }
+    @keyframes rise {
+      0% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-110vh) translateX(30px); opacity: 0; }
+    }
+    .hero-inner {
+      position: relative; display: grid;
+      grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 16px; border-radius: 999px;
+      border: 1px solid rgba(230, 204, 138, .5);
+      color: var(--gold-300); font-size: .85rem; letter-spacing: .06em;
+      margin-bottom: 24px; background: rgba(230, 204, 138, .08);
+    }
+    .hero h1 {
+      font-size: clamp(2.1rem, 5.2vw, 3.9rem);
+      line-height: 1.1; margin-bottom: 22px; font-weight: 800;
+    }
+    .hero h1 span {
+      background: linear-gradient(90deg, var(--aqua-400), var(--gold-300));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero p { font-size: 1.15rem; color: rgba(255, 255, 255, .8); max-width: 540px; margin-bottom: 36px; }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; }
+
+    .hero-visual { position: relative; display: grid; place-items: center; min-height: 380px; }
+    .orb {
+      width: min(380px, 78vw); aspect-ratio: 1; border-radius: 50%;
+      position: relative; display: grid; place-items: center;
+      background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .2), rgba(255, 255, 255, .03) 62%);
+      border: 1px solid rgba(255, 255, 255, .2);
+      box-shadow: inset 0 0 60px rgba(63, 208, 216, .15), 0 30px 80px rgba(0, 0, 0, .3);
+      animation: float 7s ease-in-out infinite;
+    }
+    .orb::before {
+      content: ""; position: absolute; inset: 14px; border-radius: 50%;
+      border: 1px dashed rgba(230, 204, 138, .5);
+      animation: spin 40s linear infinite;
+    }
+    .ripple {
+      position: absolute; width: 60%; aspect-ratio: 1; border-radius: 50%;
+      border: 2px solid rgba(63, 208, 216, .55);
+      animation: ripple 4s ease-out infinite;
+    }
+    .ripple:nth-child(2) { animation-delay: 1.3s; }
+    .ripple:nth-child(3) { animation-delay: 2.6s; }
+    @keyframes ripple { 0% { transform: scale(.3); opacity: .9; } 100% { transform: scale(1.5); opacity: 0; } }
+    @keyframes float { 50% { transform: translateY(-16px); } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .chip {
+      position: absolute; padding: 10px 16px; border-radius: 14px;
+      background: rgba(255, 255, 255, .12); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, .25);
+      font-size: .88rem; font-weight: 600; white-space: nowrap;
+      animation: float 5s ease-in-out infinite;
+    }
+    .chip b { color: var(--gold-300); }
+    .chip.c1 { top: 4%; left: -2%; animation-delay: -1s; }
+    .chip.c2 { bottom: 10%; right: -2%; animation-delay: -2.5s; }
+    .chip.c3 { bottom: 0; left: 8%; animation-delay: -3.5s; }
+
+    .scroll-hint {
+      position: absolute; left: 50%; bottom: 80px; transform: translateX(-50%);
+      font-size: .8rem; letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(255, 255, 255, .6); text-align: center;
+      animation: hint 2s ease-in-out infinite;
+    }
+    @keyframes hint { 50% { transform: translate(-50%, 8px); } }
+    .wave { position: absolute; left: 0; right: 0; bottom: -1px; line-height: 0; }
+    .wave svg { width: 100%; height: 70px; }
+
+    /* ---------- Риба, що падає ---------- */
+    .fish {
+      position: fixed; top: 0; left: 0; z-index: 60;
+      width: 130px; aspect-ratio: 2 / 1;
+      pointer-events: none; will-change: transform;
+      filter: drop-shadow(0 14px 18px rgba(4, 24, 47, .35));
+    }
+    .fish-inner { width: 100%; height: 100%; transform-origin: 50% 80%; }
+    .fish svg { width: 100%; height: 100%; overflow: visible; }
+    body.landed .fish-inner { animation: land 0.9s cubic-bezier(.3, 1.6, .5, 1) both; }
+    @keyframes land {
+      0% { transform: scale(1, 1); }
+      25% { transform: scale(1.12, .8); }
+      55% { transform: scale(.96, 1.1) translateY(-8px); }
+      100% { transform: scale(1, 1); }
+    }
+
+    /* ---------- Каталог ---------- */
+    .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; }
+    .card {
+      position: relative; background: #fff;
+      border: 1px solid #e3edf3; border-radius: var(--radius);
+      padding: 32px 26px 28px; box-shadow: var(--shadow);
+      transition: transform .35s cubic-bezier(.2, .8, .2, 1), box-shadow .35s ease, border-color .35s ease;
+      overflow: hidden;
+    }
+    .card::before {
+      content: ""; position: absolute; left: 0; top: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--aqua-500), var(--gold-500));
+      transform: scaleX(0); transform-origin: left; transition: transform .4s ease;
+    }
+    .card:hover { transform: translateY(-10px) scale(1.03); box-shadow: var(--shadow-lg); border-color: rgba(20, 184, 196, .4); }
+    .card:hover::before { transform: scaleX(1); }
+    .card-icon {
+      width: 68px; height: 68px; border-radius: 20px;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--aqua-100), #fff);
+      border: 1px solid #cdeef1; margin-bottom: 22px;
+      transition: transform .4s ease, background .4s ease;
+    }
+    .card:hover .card-icon { transform: rotate(-8deg) scale(1.08); background: linear-gradient(135deg, var(--navy-700), var(--aqua-500)); }
+    .card-icon svg { width: 38px; height: 38px; stroke: var(--navy-700); transition: stroke .3s; }
+    .card:hover .card-icon svg { stroke: #fff; }
+    .card h3 { font-size: 1.3rem; color: var(--navy-800); margin-bottom: 10px; }
+    .card p { color: var(--muted); font-size: .96rem; margin-bottom: 16px; }
+    .card ul li {
+      font-size: .92rem; padding: 6px 0 6px 22px; position: relative;
+      border-top: 1px dashed #dbe7ee;
+    }
+    .card ul li::before {
+      content: ""; position: absolute; left: 2px; top: 50%;
+      width: 8px; height: 8px; background: var(--gold-500);
+      transform: translateY(-50%) rotate(45deg);
+    }
+    .card-link {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 18px;
+      font-weight: 600; color: var(--aqua-500);
+      transition: gap .25s, color .25s;
+    }
+    .card:hover .card-link { gap: 14px; color: var(--navy-700); }
+
+    /* ---------- Переваги ---------- */
+    .advantages {
+      background:
+        radial-gradient(700px 400px at 100% 0%, rgba(20, 184, 196, .25), transparent 60%),
+        linear-gradient(160deg, var(--navy-900), var(--navy-800));
+      color: #fff;
+    }
+    .advantages .section-title { color: #fff; }
+    .advantages .section-lead { color: rgba(255, 255, 255, .7); }
+    .adv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .adv {
+      padding: 36px 30px; border-radius: var(--radius);
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .14);
+      backdrop-filter: blur(6px);
+      transition: transform .35s ease, background .35s ease, border-color .35s ease;
+    }
+    .adv:hover { transform: translateY(-8px) scale(1.02); background: rgba(255, 255, 255, .1); border-color: rgba(230, 204, 138, .6); }
+    .adv-num {
+      font-size: 3rem; font-weight: 800; line-height: 1; margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--gold-300), var(--gold-500));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .adv h3 { font-size: 1.3rem; margin-bottom: 10px; }
+    .adv p { color: rgba(255, 255, 255, .72); }
+
+    /* ---------- Контакти ---------- */
+    .contacts { background: var(--bg); }
+    .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: stretch; }
+    .contact-list { display: grid; gap: 18px; align-content: start; }
+    .contact-item {
+      display: flex; gap: 18px; align-items: flex-start;
+      background: #fff; padding: 22px 24px; border-radius: var(--radius);
+      box-shadow: var(--shadow); border: 1px solid #e3edf3;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .contact-item:hover { transform: translateX(8px); box-shadow: var(--shadow-lg); }
+    .c-icon {
+      flex: none; width: 52px; height: 52px; border-radius: 16px;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--navy-700), var(--aqua-500));
+    }
+    .c-icon svg { width: 26px; height: 26px; stroke: #fff; }
+    .contact-item h4 { color: var(--navy-800); font-size: 1.05rem; margin-bottom: 2px; }
+    .contact-item p { color: var(--muted); }
+    .contact-item a.phone { color: var(--navy-800); font-size: 1.3rem; font-weight: 700; transition: color .25s; }
+    .contact-item a.phone:hover { color: var(--aqua-500); }
+
+    .quick {
+      padding: 28px; border-radius: var(--radius);
+      background: linear-gradient(150deg, var(--navy-800), var(--navy-700));
+      color: #fff; box-shadow: var(--shadow-lg);
+    }
+    .quick h4 { font-size: 1.25rem; margin-bottom: 6px; }
+    .quick p { color: rgba(255, 255, 255, .75); margin-bottom: 20px; }
+    .quick-btns { display: grid; gap: 12px; }
+    .quick .btn { width: 100%; }
+
+    .map-box {
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow); border: 1px solid #e3edf3;
+      min-height: 420px; background: #fff;
+    }
+    .map-box iframe { width: 100%; height: 100%; min-height: 420px; border: 0; }
+
+    /* ---------- Полиця ---------- */
+    .stage {
+      padding: 90px 0 60px;
+      background:
+        radial-gradient(600px 300px at 50% 100%, rgba(201, 162, 77, .18), transparent 70%),
+        linear-gradient(180deg, var(--navy-800), var(--navy-900));
+      color: #fff; overflow: hidden;
+    }
+    .stage .section-title { color: #fff; }
+    .stage .section-lead { color: rgba(255, 255, 255, .72); }
+    .stage .section-head { margin-bottom: 20px; }
+    .shelf { position: relative; width: min(640px, 100%); height: 210px; margin: 0 auto; }
+    .landed-tag {
+      position: absolute; top: 0; left: 50%;
+      transform: translate(-50%, 10px) scale(.9); opacity: 0;
+      padding: 8px 18px; border-radius: 999px;
+      background: linear-gradient(120deg, var(--gold-300), var(--gold-500));
+      color: var(--navy-900); font-weight: 700; font-size: .9rem; white-space: nowrap;
+      transition: opacity .5s ease .4s, transform .5s cubic-bezier(.3, 1.6, .5, 1) .4s;
+    }
+    body.landed .landed-tag { opacity: 1; transform: translate(-50%, 0) scale(1); }
+    .plank {
+      position: absolute; left: 0; right: 0; top: 140px; height: 20px; border-radius: 8px;
+      background: linear-gradient(180deg, #f3dc9c 0%, var(--gold-500) 55%, #9c7a2f 100%);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, .45), inset 0 2px 0 rgba(255, 255, 255, .5);
+      transition: box-shadow .6s ease;
+    }
+    body.landed .plank { box-shadow: 0 14px 30px rgba(0, 0, 0, .45), 0 0 40px rgba(230, 204, 138, .55), inset 0 2px 0 rgba(255, 255, 255, .5); }
+    .bracket {
+      position: absolute; top: 160px; width: 18px; height: 46px;
+      background: linear-gradient(90deg, #8a6a28, var(--gold-500));
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 70%);
+    }
+    .bracket.l { left: 12%; } .bracket.r { right: 12%; transform: scaleX(-1); }
+    .ice {
+      position: absolute; top: 112px; width: 28px; height: 28px; border-radius: 6px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, .8), rgba(63, 208, 216, .35));
+      border: 1px solid rgba(255, 255, 255, .6);
+      animation: float 5s ease-in-out infinite;
+    }
+    .ice.i1 { left: 4%; } .ice.i2 { left: 11%; top: 118px; width: 22px; height: 22px; animation-delay: -1.5s; }
+    .ice.i3 { right: 5%; } .ice.i4 { right: 12%; top: 118px; width: 22px; height: 22px; animation-delay: -2.5s; }
+    .price-tag {
+      position: absolute; right: 22%; top: 150px;
+      padding: 4px 12px; border-radius: 6px; font-size: .75rem; font-weight: 700;
+      background: #fff; color: var(--navy-800); transform: rotate(-4deg);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
+    }
+
+    /* ---------- Футер ---------- */
+    footer { background: var(--navy-900); color: rgba(255, 255, 255, .7); padding: 34px 0; border-top: 1px solid rgba(255, 255, 255, .08); }
+    .foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: .93rem; }
+    .foot a:hover { color: var(--gold-300); }
+
+    /* ---------- Поява при скролі ---------- */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .8s cubic-bezier(.2, .8, .2, 1); transition-delay: var(--d, 0s); }
+    .reveal.fade { transform: none; }
+    .reveal.left { transform: translateX(-50px); }
+    .reveal.right { transform: translateX(50px); }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ---------- Адаптивність ---------- */
+    @media (max-width: 1080px) { .cat-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 900px) {
+      section { padding: 72px 0; }
+      .burger { display: block; }
+      .nav-links {
+        position: fixed; top: 0; right: 0; height: 100vh; width: min(300px, 80%);
+        flex-direction: column; justify-content: center; gap: 28px; padding: 40px;
+        background: var(--navy-900); box-shadow: -20px 0 60px rgba(0, 0, 0, .4);
+        transform: translateX(100%); transition: transform .4s cubic-bezier(.2, .8, .2, 1);
+        z-index: 100;
+      }
+      .nav-links.open { transform: none; }
+      .nav-links a { font-size: 1.2rem; }
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero p { margin-inline: auto; }
+      .hero-cta { justify-content: center; }
+      .hero-visual { order: -1; min-height: 260px; }
+      .orb { width: min(250px, 66vw); }
+      .chip.c1 { left: 0; } .chip.c2 { right: 0; } .chip.c3 { display: none; }
+      .hero { padding-top: 110px; }
+      .scroll-hint { display: none; }
+      .adv-grid { grid-template-columns: 1fr; }
+      .contact-wrap { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .cat-grid { grid-template-columns: 1fr; }
+      .nav-actions .btn span { display: none; }
+      .nav-actions .btn { padding: 10px 12px; }
+      .hero-cta .btn { width: 100%; }
+      .fish { width: 84px; }
+      .foot { flex-direction: column; text-align: center; }
+      .price-tag { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="progress" id="progress"></div>
+
+  <!-- Шапка -->
+  <header id="header">
+    <div class="container nav">
+      <a href="#top" class="logo" aria-label="Рибний світ — на головну">
+        <span class="logo-mark">
+          <svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 32c10-14 26-18 40-8l12-8v32l-12-8C32 50 16 46 6 32z"/>
+            <circle cx="20" cy="30" r="2.5" fill="#fff"/>
+          </svg>
+        </span>
+        <span class="logo-text">Рибний світ<small>рибний магазин</small></span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Основна навігація">
+        <a href="#catalog">Каталог</a>
+        <a href="#advantages">Переваги</a>
+        <a href="#contacts">Контакти</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="viber://chat?number=%2B380965155605" class="btn btn-viber" aria-label="Написати у Viber">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 2.5c-5 0-9 3.3-9 8 0 2.6 1.2 4.7 3.2 6.2V21l3.3-2c.8.2 1.6.3 2.5.3 5 0 9-3.3 9-8s-4-8-9-8z"/><g transform="translate(7.2 6.4) scale(.38)" fill="none" stroke="#7360f2" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></g></svg>
+          <span>Viber</span>
+        </a>
+        <a href="https://t.me/+380965155605" target="_blank" rel="noopener" class="btn btn-tg" aria-label="Написати в Telegram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M21.6 3.4 2.9 10.6c-.9.4-.9 1.1-.2 1.3l4.8 1.5 1.8 5.6c.2.6.4.7.9.4l2.6-2.1 4.9 3.6c.9.5 1.5.2 1.8-.8L22.5 4.6c.3-1.3-.5-1.8-.9-1.2z"/><path d="M9.3 13.3 18 7.2" stroke="#229ed9" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+          <span>Telegram</span>
+        </a>
+        <button class="burger" id="burger" aria-label="Відкрити меню" aria-expanded="false"><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Риба, що падає при скролі -->
+  <div class="fish" id="fish" aria-hidden="true">
+    <div class="fish-inner" id="fishInner">
+      <svg viewBox="0 0 200 100" fill="none">
+        <defs>
+          <linearGradient id="fBody" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3fd0d8"/>
+            <stop offset=".55" stop-color="#14a3c4"/>
+            <stop offset="1" stop-color="#0a3a6b"/>
+          </linearGradient>
+          <linearGradient id="fGold" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#f3dc9c"/>
+            <stop offset="1" stop-color="#c9a24d"/>
+          </linearGradient>
+        </defs>
+        <path d="M46 50 L6 18 Q20 50 6 82 Z" fill="url(#fGold)"/>
+        <path d="M88 24 Q108 -4 136 22 Z" fill="url(#fGold)"/>
+        <path d="M92 76 Q106 94 124 78 Z" fill="url(#fGold)"/>
+        <path d="M40 50 C62 14 132 10 172 44 C178 49 178 51 172 56 C132 90 62 86 40 50 Z" fill="url(#fBody)"/>
+        <path d="M120 24 C132 40 132 62 120 76" stroke="#fff" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/>
+        <path d="M70 38 q10 12 0 24 M86 34 q10 16 0 32 M102 32 q9 18 0 36" stroke="#fff" stroke-opacity=".28" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="152" cy="43" r="6" fill="#04182f"/>
+        <circle cx="154" cy="41" r="2" fill="#fff"/>
+        <path d="M172 52 q-8 3 -14 0" stroke="#04182f" stroke-opacity=".5" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <main id="top">
+    <!-- Головний екран -->
+    <section class="hero">
+      <div class="bubbles" id="bubbles" aria-hidden="true"></div>
+      <div class="container hero-inner">
+        <div>
+          <div class="hero-badge reveal fade">✦ Кам'янське · пр. Василя Стуса, 37/16</div>
+          <h1 class="reveal" style="--d:.1s">Свіжа риба та морепродукти <span>вищої якості</span> в Кам'янському</h1>
+          <p class="reveal" style="--d:.2s">Багатий вибір риби, ікри та делікатесів для вашого столу. Лише перевірені постачальники та суворий контроль свіжості щодня.</p>
+          <div class="hero-cta reveal" style="--d:.3s">
+            <a href="#catalog" class="btn btn-gold btn-lg">Переглянути каталог →</a>
+            <a href="viber://chat?number=%2B380965155605" class="btn btn-viber btn-lg">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 2.5c-5 0-9 3.3-9 8 0 2.6 1.2 4.7 3.2 6.2V21l3.3-2c.8.2 1.6.3 2.5.3 5 0 9-3.3 9-8s-4-8-9-8z"/><g transform="translate(7.2 6.4) scale(.38)" fill="none" stroke="#7360f2" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></g></svg>
+              Написати у Viber
+            </a>
+            <a href="https://t.me/+380965155605" target="_blank" rel="noopener" class="btn btn-tg btn-lg">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M21.6 3.4 2.9 10.6c-.9.4-.9 1.1-.2 1.3l4.8 1.5 1.8 5.6c.2.6.4.7.9.4l2.6-2.1 4.9 3.6c.9.5 1.5.2 1.8-.8L22.5 4.6c.3-1.3-.5-1.8-.9-1.2z"/><path d="M9.3 13.3 18 7.2" stroke="#229ed9" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+              Написати в Telegram
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal right" style="--d:.2s">
+          <div class="orb" id="orb">
+            <span class="ripple"></span><span class="ripple"></span><span class="ripple"></span>
+          </div>
+          <div class="chip c1"><b>★</b> Преміум якість</div>
+          <div class="chip c2"><b>❄</b> Охолоджено щодня</div>
+          <div class="chip c3"><b>⚓</b> Кам'янське</div>
+        </div>
+      </div>
+
+      <div class="scroll-hint">Гортайте вниз<br>↓</div>
+      <div class="wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path fill="#ffffff" d="M0 40c120 30 240 30 360 10s240-40 360-30 240 40 360 40 240-20 360-30v40H0z"/></svg>
+      </div>
+    </section>
+
+    <!-- Каталог -->
+    <section class="categories" id="catalog">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow">Каталог</span>
+          <h2 class="section-title">Все найкраще з морів і річок</h2>
+          <p class="section-lead">Оберіть категорію. Актуальний асортимент і ціни підкажемо в магазині або в месенджері.</p>
+        </div>
+
+        <div class="cat-grid">
+          <article class="card reveal" style="--d:0s">
+            <div class="card-icon">
+              <svg viewBox="0 0 64 64" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 32c10-14 26-18 40-8l12-8v32l-12-8C32 50 16 46 6 32z"/><circle cx="20" cy="30" r="2" fill="#0a3a6b"/></svg>
+            </div>
+            <h3>Свіжа риба</h3>
+            <p>Охолоджена та заморожена риба на будь-який смак і бюджет.</p>
+            <ul>
+              <li>Лосось і форель</li>
+              <li>Дорадо та сибас</li>
+              <li>Скумбрія й оселедець</li>
+              <li>Річкова риба</li>
+            </ul>
+            <a href="#contacts" class="card-link">Дізнатися про наявність →</a>
+          </article>
+
+          <article class="card reveal" style="--d:.1s">
+            <div class="card-icon">
+              <svg viewBox="0 0 64 64" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="20" r="6"/><circle cx="20" cy="38" r="6"/><circle cx="44" cy="38" r="6"/><circle cx="32" cy="50" r="5"/></svg>
+            </div>
+            <h3>Ікра та делікатеси</h3>
+            <p>Вишукані позиції для святкового столу та особливих нагод.</p>
+            <ul>
+              <li>Червона ікра</li>
+              <li>Слабосолона риба</li>
+              <li>Копчені делікатеси</li>
+              <li>Рибні пресерви</li>
+            </ul>
+            <a href="#contacts" class="card-link">Дізнатися про наявність →</a>
+          </article>
+
+          <article class="card reveal" style="--d:.2s">
+            <div class="card-icon">
+              <svg viewBox="0 0 64 64" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 30c0-12 9-20 20-20s20 8 20 20c0 6-3 10-6 12l2 10-8-4-8 6-8-6-8 4 2-10c-3-2-6-6-6-12z"/><circle cx="25" cy="28" r="2" fill="#0a3a6b"/><circle cx="39" cy="28" r="2" fill="#0a3a6b"/></svg>
+            </div>
+            <h3>Дари моря</h3>
+            <p>Морепродукти для легких вечерь, паст і ресторанних страв удома.</p>
+            <ul>
+              <li>Креветки</li>
+              <li>Кальмари та восьминоги</li>
+              <li>Мідії</li>
+              <li>Морський коктейль</li>
+            </ul>
+            <a href="#contacts" class="card-link">Дізнатися про наявність →</a>
+          </article>
+
+          <article class="card reveal" style="--d:.3s">
+            <div class="card-icon">
+              <svg viewBox="0 0 64 64" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 14h26v6c0 3 4 4 4 10v20a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4V30c0-6 4-7 4-10z"/><path d="M46 26h4a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4h-4"/><path d="M16 26h30"/></svg>
+            </div>
+            <h3>Закуски до пива</h3>
+            <p>Ідеальна компанія для доброго вечора з друзями.</p>
+            <ul>
+              <li>Сушена та в'ялена риба</li>
+              <li>Рибні чипси та снеки</li>
+              <li>Кальмар і креветка до пива</li>
+              <li>Асорті та набори</li>
+            </ul>
+            <a href="#contacts" class="card-link">Дізнатися про наявність →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Переваги -->
+    <section class="advantages" id="advantages">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow">Переваги</span>
+          <h2 class="section-title">Чому обирають «Рибний світ»</h2>
+          <p class="section-lead">Ми цінуємо довіру покупців і щодня тримаємо високий стандарт якості.</p>
+        </div>
+
+        <div class="adv-grid">
+          <div class="adv reveal left" style="--d:0s">
+            <div class="adv-num">01</div>
+            <h3>Щоденні свіжі поставки</h3>
+            <p>Асортимент регулярно оновлюється, щоб на прилавку завжди був свіжий і різноманітний вибір.</p>
+          </div>
+          <div class="adv reveal" style="--d:.15s">
+            <div class="adv-num">02</div>
+            <h3>Контроль якості</h3>
+            <p>Стежимо за температурним режимом і термінами придатності та працюємо лише з перевіреними постачальниками.</p>
+          </div>
+          <div class="adv reveal right" style="--d:.3s">
+            <div class="adv-num">03</div>
+            <h3>Зручне розташування на Стуса</h3>
+            <p>Магазин на проспекті Василя Стуса в Кам'янському: легко заїхати чи зайти дорогою додому.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Контакти -->
+    <section class="contacts" id="contacts">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Контакти</span>
+          <h2 class="section-title">Чекаємо на вас у магазині</h2>
+          <p class="section-lead">Телефонуйте, пишіть у месенджери та приходьте по свіжу рибу й морепродукти.</p>
+        </div>
+
+        <div class="contact-wrap">
+          <div class="contact-list">
+            <div class="contact-item reveal left" style="--d:0s">
+              <div class="c-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              </div>
+              <div>
+                <h4>Адреса</h4>
+                <p>м. Кам'янське, проспект Василя Стуса, 37/16</p>
+              </div>
+            </div>
+
+            <div class="contact-item reveal left" style="--d:.1s">
+              <div class="c-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+              </div>
+              <div>
+                <h4>Телефон</h4>
+                <a class="phone" href="tel:+380965155605">096 515 5605</a>
+              </div>
+            </div>
+
+            <div class="contact-item reveal left" style="--d:.2s">
+              <div class="c-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              </div>
+              <div>
+                <h4>Години роботи</h4>
+                <p>Щодня: 09:00 – 20:00</p>
+              </div>
+            </div>
+
+            <div class="quick reveal" style="--d:.3s">
+              <h4>Швидкий зв'язок</h4>
+              <p>Напишіть нам — уточнимо наявність і підготуємо замовлення до вашого приходу.</p>
+              <div class="quick-btns">
+                <a href="viber://chat?number=%2B380965155605" class="btn btn-viber btn-lg">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 2.5c-5 0-9 3.3-9 8 0 2.6 1.2 4.7 3.2 6.2V21l3.3-2c.8.2 1.6.3 2.5.3 5 0 9-3.3 9-8s-4-8-9-8z"/><g transform="translate(7.2 6.4) scale(.38)" fill="none" stroke="#7360f2" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></g></svg>
+                  Написати у Viber
+                </a>
+                <a href="https://t.me/+380965155605" target="_blank" rel="noopener" class="btn btn-tg btn-lg">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M21.6 3.4 2.9 10.6c-.9.4-.9 1.1-.2 1.3l4.8 1.5 1.8 5.6c.2.6.4.7.9.4l2.6-2.1 4.9 3.6c.9.5 1.5.2 1.8-.8L22.5 4.6c.3-1.3-.5-1.8-.9-1.2z"/><path d="M9.3 13.3 18 7.2" stroke="#229ed9" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+                  Написати в Telegram
+                </a>
+                <a href="tel:+380965155605" class="btn btn-gold btn-lg">Подзвонити: 096 515 5605</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="map-box reveal right">
+            <iframe
+              title="Карта: Рибний світ, проспект Василя Стуса, 37/16, Кам'янське"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82+%D0%92%D0%B0%D1%81%D0%B8%D0%BB%D1%8F+%D0%A1%D1%82%D1%83%D1%81%D0%B0+37%2F16%2C+%D0%9A%D0%B0%D0%BC%27%D1%8F%D0%BD%D1%81%D1%8C%D0%BA%D0%B5&output=embed"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Полиця: сюди «приземляється» риба -->
+    <section class="stage" id="stage">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow">Улов дня</span>
+          <h2 class="section-title">Ваш улов уже чекає на полиці</h2>
+          <p class="section-lead">Заходьте до «Рибного світу» та обирайте найсвіжіше вже сьогодні.</p>
+        </div>
+        <div class="shelf">
+          <div class="landed-tag">✓ Свіжий улов на полиці</div>
+          <div class="ice i1"></div><div class="ice i2"></div>
+          <div class="ice i3"></div><div class="ice i4"></div>
+          <div class="plank" id="plank"></div>
+          <div class="bracket l"></div><div class="bracket r"></div>
+          <div class="price-tag">Свіже щодня</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Футер -->
+  <footer>
+    <div class="container foot">
+      <div><strong style="color:#fff">Рибний світ</strong> · пр. Василя Стуса, 37/16, Кам'янське</div>
+      <div><a href="tel:+380965155605">096 515 5605</a></div>
+      <div>© <span id="year">2026</span> Рибний світ. Усі права захищені.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Шапка та прогрес скролу
+    const header = document.getElementById('header');
+    const progress = document.getElementById('progress');
+    function onScroll() {
+      header.classList.toggle('scrolled', window.scrollY > 40);
+      const max = document.documentElement.scrollHeight - innerHeight;
+      progress.style.width = (max > 0 ? (scrollY / max) * 100 : 0) + '%';
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Мобільне меню
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('navLinks');
+    function toggleMenu(open) {
+      const state = typeof open === 'boolean' ? open : !navLinks.classList.contains('open');
+      navLinks.classList.toggle('open', state);
+      burger.classList.toggle('open', state);
+      burger.setAttribute('aria-expanded', state);
+    }
+    burger.addEventListener('click', () => toggleMenu());
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleMenu(false); });
+
+    // Плавна поява блоків
+    const items = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(en => {
+          if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      items.forEach(el => io.observe(el));
+    } else {
+      items.forEach(el => el.classList.add('visible'));
+    }
+
+    // Бульбашки у hero
+    const bubbles = document.getElementById('bubbles');
+    for (let i = 0; i < 16; i++) {
+      const b = document.createElement('i');
+      const size = 8 + Math.random() * 34;
+      b.style.width = b.style.height = size + 'px';
+      b.style.left = Math.random() * 100 + '%';
+      b.style.animationDuration = 9 + Math.random() * 12 + 's';
+      b.style.animationDelay = -Math.random() * 20 + 's';
+      bubbles.appendChild(b);
+    }
+
+    // ---------- Риба: падіння, зависання, приземлення на полицю ----------
+    const fish = document.getElementById('fish');
+    const orb = document.getElementById('orb');
+    const plank = document.getElementById('plank');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const smooth = t => t * t * (3 - 2 * t);
+
+    // Ключові точки по вертикалі (частка висоти екрана) для прогресу скролу p
+    const keys = [[0.12, 0.30], [0.50, 0.38], [0.88, 0.55]];
+    function pathY(p, vh, startY) {
+      if (p <= keys[0][0]) return lerp(startY, keys[0][1] * vh, smooth(p / keys[0][0]));
+      for (let i = 0; i < keys.length - 1; i++) {
+        const [p1, y1] = keys[i], [p2, y2] = keys[i + 1];
+        if (p <= p2) return lerp(y1, y2, (p - p1) / (p2 - p1)) * vh;
+      }
+      return keys[keys.length - 1][1] * vh;
+    }
+
+    let cx = null, cy = -300, t0 = null;
+
+    function frame(t) {
+      if (t0 === null) t0 = t;
+      const vw = innerWidth, vh = innerHeight;
+      const maxScroll = document.documentElement.scrollHeight - vh;
+      const p = maxScroll > 0 ? clamp(scrollY / maxScroll, 0, 1) : 0;
+      const fw = fish.offsetWidth, fh = fish.offsetHeight;
+
+      const o = orb.getBoundingClientRect();
+      const orbX = o.left + o.width / 2, orbY = o.top + o.height / 2;
+
+      // Горизонталь: гойдається ліворуч-праворуч
+      const amp = vw < 700 ? 0.28 : 0.38;
+      let sx = vw * (0.5 + amp * Math.cos(p * Math.PI * 3));
+      sx = clamp(sx, fw / 2 + 10, vw - fw / 2 - 10);
+      let x = lerp(orbX, sx, smooth(clamp(p / 0.12, 0, 1)));
+      let y = pathY(p, vh, orbY);
+
+      // Приземлення на полицю
+      const pr = plank.getBoundingClientRect();
+      const landX = pr.left + pr.width / 2;
+      const landY = pr.top - fh * 0.35;
+      const b1 = smooth(clamp((p - 0.86) / 0.14, 0, 1));
+      const tx = lerp(x, landX, b1);
+      const ty = lerp(y, landY, b1);
+
+      if (cx === null) cx = tx;
+
+      // Плавне «сповільнене» наслідування цілі
+      const intro = clamp((t - t0) / 2800, 0, 1);
+      const k = reduce ? 1 : (b1 > 0.5 ? 0.07 : 0.025 + 0.02 * intro);
+      cx += (tx - cx) * k;
+      cy += (ty - cy) * k;
+
+      // Нахил: носом вниз під час падіння, лягає горизонтально при приземленні
+      const fall = clamp((ty - cy) / 160, 0, 1);
+      const sway = reduce ? 0 : Math.sin(t / 500) * 5 * (1 - b1);
+      const tilt = clamp((tx - cx) * 0.05, -12, 12);
+      const rot = lerp(18 + fall * 58, 0, b1) + sway + tilt * (1 - b1);
+
+      const bob = reduce ? 0 : Math.sin(t / 700) * 6 * (1 - b1);
+
+      fish.style.transform =
+        'translate3d(' + (cx - fw / 2).toFixed(1) + 'px,' + (cy - fh / 2 + bob).toFixed(1) + 'px,0) rotate(' + rot.toFixed(1) + 'deg)';
+
+      const landed = p > 0.985 && Math.hypot(tx - cx, ty - cy) < 4;
+      document.body.classList.toggle('landed', landed);
+
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
